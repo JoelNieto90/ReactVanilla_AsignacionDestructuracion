@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/styles.css">
+  <title>Destructuring</title>
+</head>
+
+<body>
+  <main class="profile">
+    <div class="wrapper">
+      <p id="tagged"></p>
+      <div class="profile-content" id="user">
+
+      </div>
+    </div>
+  </main>
+  <script>
+    const user = {
+      name: 'Ash',
+      lastName: 'Ketchum',
+      avatar: './images/ash.jpg',
+      bio: 'Tengo 10 años y mi sueño es convertime en maestro pokemon. Actualmente viajo con Pikachu y Go.',
+      city: 'Pueblo Paleta',
+      social: [150, 160, 130, 255, 80],
+      pokemons: ['Pikachu', 'Charmander', 'Bulbaser', 'Squarelt']
+    }
+
+    function User({ name, lastName, avatar, city, bio, social, pokemons }) {
+      const fullName = `${name} ${lastName}`
+      const socialMedia = social.map((value) => `<p class="social__type">${value}</p>`).join("");
+      const groupsPokemons =  pokemons.map((value) => `<p class="pokemons__type">${value}</p>`).join("")
+      return `
+        <div class="user">
+          <img src="${avatar}" alt="${fullName}" width="140" height="140">
+          <div class="details">
+            <p>${fullName}</p>
+          </div>
+          <p class="city"><em>${city}</em></p>
+          <div class="social">
+            ${socialMedia}
+          </div>
+          <h3>Pokemons: </h3>
+          <div class="social">
+            ${groupsPokemons}
+          </div>
+          <div class="bio">
+            <p>${bio}</p>
+          </div>
+        </div>
+      `
+    }
+
+    function taggedTemplate(strings, ...dinamicValues) {
+      let newContent = "";
+      strings.forEach((string, index) => {
+        const strong  = dinamicValues[index] ? `<strong>${dinamicValues[index]}</strong>` : '';
+        newContent += `${string} ${strong}`
+      });
+      return `<p>${newContent}</p>`
+    }
+    const message = taggedTemplate`${"Asignación"} por ${"destructuración"}`;
+
+    window.user.innerHTML = User(user)
+    window.tagged.innerHTML = message
+
+  </script>
+</body>
+
+</html> 
